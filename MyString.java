@@ -113,17 +113,15 @@ public class MyString {
      * @return a string consisting of str1 minus all the characters of str2
      */
     public static String remove(String str1, String str2) {
-  
-        for(int i=0; i<str1.length(); i++){
-            char ch = str1.charAt(i);
-            int j= str2.indexOf(ch);
-
-            if (j==-1){
-                continue;
+        String result = str1; 
+        for (int i = 0; i < str2.length(); i++) {
+            char ch = str2.charAt(i);
+            int index = result.indexOf(ch);
+            if (index != -1) {
+                result = result.substring(0, index) + result.substring(index + 1);
             }
-            str2=str2.substring(0,j)+str2.substring(j+1);
-         }
-        return str2;
+        }
+        return result;
     }
     
 
