@@ -48,9 +48,10 @@ public class Scrabble {
 
 	// Checks if the given word is in the dictionary.
 	public static boolean isWordInDictionary(String word) {
-
+		if (word == null || word.isEmpty()) {
+			return false; 
+		}
 		String input = word.toLowerCase();
-
 		for (int i = 0; i < NUM_OF_WORDS; i++) {
 			if (DICTIONARY[i].equals(input)) {
 				return true;
@@ -58,6 +59,7 @@ public class Scrabble {
 		}
 		return false;
 	}
+	
 	
 	// Returns the Scrabble score of the given word.
 	// If the length of the word equals the length of the hand, adds 50 points to the score.
@@ -146,8 +148,8 @@ public class Scrabble {
 		testBuildingTheDictionary();  
 		testScrabbleScore();    
 		testCreateHands();  
-		////testPlayHands();
-		////playGame();
+		testPlayHands();
+		playGame();
 	}
 
 	public static void testBuildingTheDictionary() {
