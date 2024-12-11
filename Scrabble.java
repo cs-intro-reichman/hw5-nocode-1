@@ -48,10 +48,13 @@ public class Scrabble {
 
 	// Checks if the given word is in the dictionary.
 	// Checks if the given word is in the dictionary.
+// Checks if the given word is in the dictionary.
 public static boolean isWordInDictionary(String word) {
+    // Validate null or empty input
     if (word == null || word.isEmpty()) {
         return false; 
     }
+    
     String input = word.toLowerCase();
 
     if (!input.matches("[a-z]+")) {
@@ -65,6 +68,7 @@ public static boolean isWordInDictionary(String word) {
     }
     return false;
 }
+
 
 	
 	
