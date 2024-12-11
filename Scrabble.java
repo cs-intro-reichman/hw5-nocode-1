@@ -72,31 +72,40 @@ public static boolean isWordInDictionary(String word) {
 
 
 	
-	
-	// Returns the Scrabble score of the given word.
-// If the length of the word equals the length of the hand, adds 50 points to the score.
-// If the word includes the sequence "runi", adds 1000 points to the score.
+/**
+ * Calculates the score for a given word based on the following rules:
+ * - Each letter has a predefined score (e.g., Scrabble values).
+ * - The total score is multiplied by the length of the word.
+ * - An empty word scores 0.
+ *
+ * @param word - the word to calculate the score for
+ * @return the total score for the word
+ */
 public static int wordScore(String word) {
     if (word == null || word.isEmpty()) {
-        return 0; 
+        return 0;
     }
+
+    // Letter scores (based on Scrabble rules)
+    int[] letterScores = {
+        1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 
+        5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 
+        1, 4, 4, 8, 4, 10
+    };
 
     int score = 0;
     word = word.toLowerCase();
-    
+
+    // Calculate the score for each letter in the word
     for (int i = 0; i < word.length(); i++) {
-        char letter = word.charAt(i);
-        if (letter >= 'a' && letter <= 'z') {
-            score += SCRABBLE_LETTER_VALUES[letter - 'a'];
+        char ch = word.charAt(i);
+        if (ch >= 'a' && ch <= 'z') {
+            score += letterScores[ch - 'a'];
         }
     }
 
-    if (word.length() == HAND_SIZE) {
-        score += 50;
-    }
-    if (word.contains("runi")) {
-        score += 1000;
-    }
+    // Multiply the score by the word length
+    score *= word.length();
 
     return score;
 }
