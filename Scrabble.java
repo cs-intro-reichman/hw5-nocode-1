@@ -47,18 +47,25 @@ public class Scrabble {
 	}
 
 	// Checks if the given word is in the dictionary.
-	public static boolean isWordInDictionary(String word) {
-		if (word == null || word.isEmpty()) {
-			return false; 
-		}
-		String input = word.toLowerCase();
-		for (int i = 0; i < NUM_OF_WORDS; i++) {
-			if (DICTIONARY[i].equals(input)) {
-				return true;
-			}
-		}
-		return false;
-	}
+	// Checks if the given word is in the dictionary.
+public static boolean isWordInDictionary(String word) {
+    if (word == null || word.isEmpty()) {
+        return false; 
+    }
+    String input = word.toLowerCase();
+
+    if (!input.matches("[a-z]+")) {
+        return false;
+    }
+
+    for (int i = 0; i < NUM_OF_WORDS; i++) {
+        if (DICTIONARY[i].equals(input)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 	
 	
 	// Returns the Scrabble score of the given word.
