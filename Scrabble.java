@@ -148,7 +148,6 @@ public static void testBuildingTheDictionary() {
 	
 	
     public static void playGame() {
-		System.out.println("playGame() method exists and can be called");
 		init();
 		In in = new In();
 		String hand = "";
