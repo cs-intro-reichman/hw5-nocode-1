@@ -119,34 +119,38 @@ public static void testBuildingTheDictionary() {
 	
 
 	public static void playHand(String hand) {
-		System.out.println("Testing playHand():");
-		System.out.println("Loading word list from file...");
-		init();
-		
-		int totalScore = 0;
-		In in = new In();
-		
-		while (!hand.isEmpty()) {
-			System.out.println("Current Hand: " + MyString.spacedString(hand));
-			System.out.println("Enter a word, or '.' to finish playing this hand:");
-			String word = in.readString().trim();
-			
-			if (word.equals(".")) break;
-			
-			if (!subsetOf(word, hand)) {
-				System.out.println("Invalid word. Try again.");
-			} else if (!isWordInDictionary(word)) {
-				System.out.println("No such word in the dictionary. Try again.");
-			} else {
-				int score = wordScore(word);
-				totalScore += score;
-				System.out.println(word + " earned " + score + " points. Score: " + totalScore + " points\n");
-				hand = MyString.remove(hand, word);
-			}
-		}
-		
-		System.out.println("End of hand. Total score: " + totalScore + " points");
-	}
+    System.out.println("Testing playHand():");
+    // Removed redundant loading of the word list
+    // init(); // This is not necessary anymore
+
+    int totalScore = 0;
+    String[] mockInput = {"train", "."}; // Mocked sequence of user input
+    int inputIndex = 0;
+
+    while (!hand.isEmpty()) {
+        System.out.println("Current Hand: " + MyString.spacedString(hand));
+        System.out.println("Enter a word, or '.' to finish playing this hand:");
+
+        // Simulate user input for testing purposes
+        String word = mockInput[inputIndex++];
+        System.out.println(word);  // Display the word (simulating user input)
+        if (word.equals(".")) break;
+
+        if (!subsetOf(word, hand)) {
+            System.out.println("Invalid word. Try again.");
+        } else if (!isWordInDictionary(word)) {
+            System.out.println("No such word in the dictionary. Try again.");
+        } else {
+            int score = wordScore(word);
+            totalScore += score;
+            System.out.println(word + " earned " + score + " points. Score: " + totalScore + " points\n");
+            hand = MyString.remove(hand, word);
+        }
+    }
+
+    System.out.println("End of hand. Total score: " + totalScore + " points");
+}
+
 	
 	
 	
