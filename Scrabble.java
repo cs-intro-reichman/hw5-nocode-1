@@ -104,23 +104,30 @@ public static void testBuildingTheDictionary() {
 
 public static void playHand(String hand) {
     System.out.println("Testing playHand():");
+    System.out.println("Loading word list from file...");
+    init(); // Ensure dictionary is loaded
+    System.out.println(NUM_OF_WORDS + " words loaded.");
 
     int totalScore = 0;
-    String[] mockInput = {"train", "."}; // Mocked sequence of user input
+
+    // Mocked input sequence for testing
+    String[] mockInput = {"train", "."};
     int inputIndex = 0;
 
     while (!hand.isEmpty()) {
-        // Print the current hand
+        // Display current hand
         System.out.print("Current Hand: ");
         for (char c : hand.toCharArray()) {
             System.out.print(c + " ");
         }
-        System.out.println(); // Move to the next line
+        System.out.println(); // End current hand display line
 
-        // Simulate user input for testing purposes
+        // Prompt for word
         System.out.println("Enter a word, or '.' to finish playing this hand:");
+
+        // Simulate user input for testing
         String word = mockInput[inputIndex++];
-        System.out.println(word); // Display the word (simulating user input)
+        System.out.println(word); // Display the word as if the user entered it
 
         if (word.equals(".")) break;
 
@@ -138,6 +145,7 @@ public static void playHand(String hand) {
 
     System.out.println("End of hand. Total score: " + totalScore + " points");
 }
+
 
 	
 	
