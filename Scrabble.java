@@ -131,23 +131,24 @@ public class Scrabble {
     }
 
     public static void playGame() {
-        init();
-        In in = new In();
+    init(); 
+    In in = new In();
 
-        while (true) {
-            System.out.println("Enter n to deal a new hand, or e to end the game:");
-            String input = in.readString();
-            if (input.equals("n")) {
-                String hand = createHand();
-                playHand(hand);
-            } else if (input.equals("e")) {
-                break;
-            } else {
-                System.out.println("Invalid input. Please enter 'n' or 'e'.");
-            }
+    while (true) {
+        System.out.println("Enter n to deal a new hand, or e to end the game:");
+        String input = in.readString();
+        if (input.equals("n")) {
+            String hand = createHand();
+            playHand(hand);
+        } else if (input.equals("e")) {
+            System.out.println("Game over!");
+            break;
+        } else {
+            System.out.println("Invalid input. Please enter 'n' or 'e'.");
         }
-        System.out.println("Game over!");
     }
+}
+
 
     public static void main(String[] args) {
         testBuildingTheDictionary();
