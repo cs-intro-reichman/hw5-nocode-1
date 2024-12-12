@@ -128,8 +128,6 @@ public static void testBuildingTheDictionary() {
     int inputIndex = 0;
 
     while (!hand.isEmpty()) {
-        System.out.println("Current Hand: " + MyString.spacedString(hand));
-        System.out.println("Enter a word, or '.' to finish playing this hand:");
 
         // Simulate user input for testing purposes
         String word = mockInput[inputIndex++];
