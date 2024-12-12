@@ -102,7 +102,7 @@ public static void testBuildingTheDictionary() {
 	}
 	
 
-public static void playHand(String hand) {
+	public static void playHand(String hand) {
 		System.out.println("Testing playHand():");
 		System.out.println("Loading word list from file...");
 		init(); // Ensure dictionary is loaded
@@ -134,7 +134,7 @@ public static void playHand(String hand) {
 	
 		System.out.println("End of hand. Total score: " + totalScore + " points");
 	}
-
+	
 
 	
 	
