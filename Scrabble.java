@@ -103,48 +103,37 @@ public static void testBuildingTheDictionary() {
 	
 
 public static void playHand(String hand) {
-    System.out.println("Testing playHand():");
-    System.out.println("Loading word list from file...");
-    init(); // Ensure dictionary is loaded
-    System.out.println(NUM_OF_WORDS + " words loaded.");
-
-    int totalScore = 0;
-
-    // Mocked input sequence for testing
-    String[] mockInput = {"train", "."};
-    int inputIndex = 0;
-
-    while (!hand.isEmpty()) {
-        // Display current hand
-        System.out.print("Current Hand: ");
-        for (char c : hand.toCharArray()) {
-            System.out.print(c + " ");
-        }
-        System.out.println(); // End current hand display line
-
-        // Prompt for word
-        System.out.println("Enter a word, or '.' to finish playing this hand:");
-
-        // Simulate user input for testing
-        String word = mockInput[inputIndex++];
-        System.out.println(word); // Display the word as if the user entered it
-
-        if (word.equals(".")) break;
-
-        if (!subsetOf(word, hand)) {
-            System.out.println("Invalid word. Try again.");
-        } else if (!isWordInDictionary(word)) {
-            System.out.println("No such word in the dictionary. Try again.");
-        } else {
-            int score = wordScore(word);
-            totalScore += score;
-            System.out.println(word + " earned " + score + " points. Score: " + totalScore + " points\n");
-            hand = MyString.remove(hand, word);
-        }
-    }
-
-    System.out.println("End of hand. Total score: " + totalScore + " points");
-}
+		System.out.println("Testing playHand():");
+		System.out.println("Loading word list from file...");
+		init(); // Ensure dictionary is loaded
+		System.out.println(NUM_OF_WORDS + " words loaded.");
+	
+		int totalScore = 0;
+	
+		// Mocked input sequence for testing
+		String[] mockInput = {"train", "."};
+		int inputIndex = 0;
+	
+		while (true) {
+			System.out.println("Enter word, or '.' to indicate that you're finished:");
+			String word = mockInput[inputIndex];
+			inputIndex = (inputIndex + 1) % mockInput.length;
+	
+			if (word.equals(".")) {
+				break;
+			}
+	
+			if (isWordInDictionary(word) && subsetOf(word, hand)) {
+				int wordScore = wordScore(word);
+				totalScore += wordScore;
+				System.out.println(word + " earned " + wordScore + " points. Total: " + totalScore + " points");
+			} else {	
+				System.out.println(word + " is not a valid word.");	
+			}
+		}
+	
+		System.out.println("End of hand. Total score: " + totalScore + " points");
+	}
 
 
 	
