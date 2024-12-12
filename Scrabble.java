@@ -88,7 +88,7 @@ public static void playHand(String hand) {
                 } else {
                     int points = wordScore(userInput);
                     score += points;
-                    System.out.printf("%s earned %d points. Total score: %d points%n", userInput, points, score);
+                    System.out.println("%s earned %d points. Total score: %d points%n", userInput, points, score);
                     hand = MyString.remove(hand, userInput);
                 }
             } else {
@@ -101,20 +101,20 @@ public static void playHand(String hand) {
     if (hand.isEmpty()) {
         System.out.printf("Ran out of letters. Total score: %d points%n", score);
     } else {
-        System.out.printf("End of hand. Total score: %d points%n", score);
+        System.out.println("End of hand. Total score: %d points%n", score);
+		
     }
 }
 
 // Plays a Scrabble game by allowing the user to deal a new hand or end the game.
 public static void playGame() {
     // Initialize the dictionary.
-    init();
 
     // Input reader for user input.
     In inputReader = new In();
 
     while (true) {
-        System.out.println("Enter 'n' to deal a new hand, or 'e' to end the game:");
+       // System.out.println("Enter 'n' to deal a new hand, or 'e' to end the game:");
 
         String userInput = inputReader.readString();
 
