@@ -102,20 +102,26 @@ public static void testBuildingTheDictionary() {
 	}
 	
 
-	public static void playHand(String hand) {
+public static void playHand(String hand) {
     System.out.println("Testing playHand():");
-    // Removed redundant loading of the word list
-    // init(); // This is not necessary anymore
 
     int totalScore = 0;
     String[] mockInput = {"train", "."}; // Mocked sequence of user input
     int inputIndex = 0;
 
     while (!hand.isEmpty()) {
+        // Print the current hand
+        System.out.print("Current Hand: ");
+        for (char c : hand.toCharArray()) {
+            System.out.print(c + " ");
+        }
+        System.out.println(); // Move to the next line
 
         // Simulate user input for testing purposes
+        System.out.println("Enter a word, or '.' to finish playing this hand:");
         String word = mockInput[inputIndex++];
-        System.out.println(word);  // Display the word (simulating user input)
+        System.out.println(word); // Display the word (simulating user input)
+
         if (word.equals(".")) break;
 
         if (!subsetOf(word, hand)) {
