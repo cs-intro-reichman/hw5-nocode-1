@@ -51,6 +51,8 @@ public static void testBuildingTheDictionary() {
     System.out.println(isWordInDictionary("xyz123")); 
     System.out.println(isWordInDictionary("qwxz"));  
 
+}
+
 
     public static int wordScore(String word) {
         int score = 0;
@@ -245,5 +247,4 @@ public static void testBuildingTheDictionary() {
 		playHand("arbffip");
 		playHand("aretiin");
 	}
-}
 }
