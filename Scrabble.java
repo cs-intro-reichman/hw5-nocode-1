@@ -1,8 +1,13 @@
-
 /*
  * RUNI version of the Scrabble game.
  */
 public class Scrabble {
+
+	// Note 1: "Class variables", like the five class-level variables declared below,
+	// are global variables that can be accessed by any function in the class. It is
+	// customary to name class variables using capital letters and underline characters.
+	// Note 2: If a variable is declared "final", it is treated as a constant value
+	// which is initialized once and cannot be changed later.
 
 	// Dictionary file for this Scrabble game
 	static final String WORDS_FILE = "dictionary.txt";
@@ -42,33 +47,11 @@ public class Scrabble {
 	}
 
 	public static boolean isWordInDictionary(String word) {
-    // Check if the word consists only of alphabetic characters
-    if (!word.matches("[a-zA-Z]+")) {
+        for (int i = 0; i < NUM_OF_WORDS; i++) {
+            if (DICTIONARY[i].equals(word)) return true;
+        }
         return false;
     }
-
-    word = word.toLowerCase();
-
-    for (int i = 0; i < NUM_OF_WORDS; i++) {
-        if (DICTIONARY[i].equals(word)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-public static void testBuildingTheDictionary() {
-    init();
-    // Prints a few words
-    for (int i = 0; i < 5; i++) {
-        System.out.println(DICTIONARY[i]);
-    }
-    System.out.println(isWordInDictionary("mango")); // should return true or false based on dictionary
-    System.out.println(isWordInDictionary("cat"));   // should return true or false based on dictionary
-    System.out.println(isWordInDictionary("xyz123")); // should return false
-    System.out.println(isWordInDictionary("qwxz"));   // should return true or false based on dictionary
-}
-
 
     public static int wordScore(String word) {
         int score = 0;
@@ -167,7 +150,14 @@ public static void testBuildingTheDictionary() {
 		playGame();
 	}
 
-
+	public static void testBuildingTheDictionary() {
+		init();
+		// Prints a few words
+		for (int i = 0; i < 5; i++) {
+			System.out.println(DICTIONARY[i]);
+		}
+		System.out.println(isWordInDictionary("mango"));
+	}
 	
 	public static void testScrabbleScore() {
 		System.out.println(wordScore("bee"));	
