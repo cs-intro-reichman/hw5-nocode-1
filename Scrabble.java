@@ -1,3 +1,4 @@
+
 /*
  * RUNI version of the Scrabble game.
  */
@@ -166,14 +167,7 @@ public static void testBuildingTheDictionary() {
 		playGame();
 	}
 
-	public static void testBuildingTheDictionary() {
-		init();
-		// Prints a few words
-		for (int i = 0; i < 5; i++) {
-			System.out.println(DICTIONARY[i]);
-		}
-		System.out.println(isWordInDictionary("mango"));
-	}
+
 	
 	public static void testScrabbleScore() {
 		System.out.println(wordScore("bee"));	
