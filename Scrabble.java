@@ -27,15 +27,12 @@ public class Scrabble {
 	// Populates the DICTIONARY array with the lowercase version of all the words read
 	// from the WORDS_FILE, and sets NUM_OF_WORDS to the number of words read from the file.
 	public static void init() {
-		// Declares the variable in to refer to an object of type In, and initializes it to represent
-		// the stream of characters coming from the given file. Used for reading words from the file.  
+		
 		In in = new In(WORDS_FILE);
         System.out.println("Loading word list from file...");
         NUM_OF_WORDS = 0;
 		while (!in.isEmpty()) {
-			// Reads the next "token" from the file. A token is defined as a string of 
-			// non-whitespace characters. Whitespace is either space characters, or  
-			// end-of-line characters.
+			
 			DICTIONARY[NUM_OF_WORDS++] = in.readString().toLowerCase();
 		}
         System.out.println(NUM_OF_WORDS + " words loaded.");
@@ -46,15 +43,13 @@ public class Scrabble {
 
 public static void testBuildingTheDictionary() {
     init();
-    // Prints a few words
     for (int i = 0; i < 5; i++) {
         System.out.println(DICTIONARY[i]);
     }
-    System.out.println(isWordInDictionary("mango")); // should return true or false based on dictionary
-    System.out.println(isWordInDictionary("cat"));   // should return true or false based on dictionary
-    System.out.println(isWordInDictionary("xyz123")); // should return false
-    System.out.println(isWordInDictionary("qwxz"));   // should return true or false based on dictionary
-}
+    System.out.println(isWordInDictionary("mango")); 
+    System.out.println(isWordInDictionary("cat"));   
+    System.out.println(isWordInDictionary("xyz123")); 
+    System.out.println(isWordInDictionary("qwxz"));  
 
 
     public static int wordScore(String word) {
@@ -80,7 +75,6 @@ public static void testBuildingTheDictionary() {
 		int[] handCount = new int[26];
 		int[] wordCount = new int[26];
 	
-		// Count letters in the hand
 		for (char c : hand.toLowerCase().toCharArray()) {
 			if (c >= 'a' && c <= 'z') { 
 				handCount[c - 'a']++;
@@ -105,12 +99,11 @@ public static void testBuildingTheDictionary() {
 	public static void playHand(String hand) {
 		System.out.println("Testing playHand():");
 		System.out.println("Loading word list from file...");
-		init(); // Ensure dictionary is loaded
+		init(); 
 		System.out.println(NUM_OF_WORDS + " words loaded.");
 	
 		int totalScore = 0;
 	
-		// Mocked input sequence for testing
 		String[] mockInput = {"train", "."};
 		int inputIndex = 0;
 	
@@ -160,29 +153,26 @@ public static void testBuildingTheDictionary() {
 	
 
 	public static boolean isWordInDictionary(String word) {
-    // Check if the word consists only of lowercase alphabetic characters
     if (!word.matches("[a-z]+")) {
-        return false; // Return false for non-lowercase or non-alphabetic words
+        return false; 
     }
 
-    // Now check if the word is in the dictionary
     for (int i = 0; i < NUM_OF_WORDS; i++) {
         if (DICTIONARY[i].equals(word)) {
-            return true;  // Word found in dictionary
+            return true; 
         }
     }
 
-    return false;  // Word not found in dictionary
+    return false;  
 }
 
 	
-	// Helper method to return the expected result for the test cases
 	public static boolean getExpectedIsWordInDictionaryResult(String word) {
 		switch (word) {
-			case "": return false; // Empty string is not a valid word
-			case "CAT": return false; // Uppercase word is not considered valid as per the current implementation
-			case "xyz123": return false; // Invalid word due to digits
-			case "qwxz": return false; // This will depend on your dictionary content, assuming it isn't in the dictionary
+			case "": return false; 
+			case "CAT": return false; 
+			case "xyz123": return false; 
+			case "qwxz": return false; 
 			default: return false;
 		}
 	}
@@ -203,18 +193,14 @@ public static void testBuildingTheDictionary() {
 
 	public static void testScrabbleScore() {
 		System.out.println("Testing wordScore():");
-	
-		// List of words to test
 		String[] words = {"cat", "dog", "quiz", "friendship", "running", "", "a"};
 	
-		// Loop through each word, calculate the score, and print the result
 		for (String word : words) {
 			int score = wordScore(word);
 			System.out.println("'" + word + "' -> " + score + " (expected: " + getExpectedScore(word) + ")");
 		}
 	}
 	
-	// Helper method to return the expected score for the test cases
 	public static int getExpectedScore(String word) {
 		switch (word) {
 			case "cat": return 15;
@@ -224,7 +210,7 @@ public static void testBuildingTheDictionary() {
 			case "running": return 1056;
 			case "": return 0;
 			case "a": return 1;
-			default: return -1; // Invalid word case (though it shouldn't happen in this test)
+			default: return -1; 
 		}
 	}
 	
@@ -232,7 +218,6 @@ public static void testBuildingTheDictionary() {
 	public static void testCreateHands() {
 		System.out.println("Testing createHand():");
 	
-		// Generate and print the properties of 3 hands
 		for (int i = 1; i <= 3; i++) {
 			String hand = createHand();
 			System.out.println("Hand " + i + ":");
@@ -245,7 +230,6 @@ public static void testBuildingTheDictionary() {
 		}
 	}
 	
-	// Helper method to check if all characters in the hand are valid Scrabble letters
 	public static boolean isValidScrabbleHand(String hand) {
 		for (char c : hand.toCharArray()) {
 			if (!Character.isLowerCase(c) || c < 'a' || c > 'z') {
