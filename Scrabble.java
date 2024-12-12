@@ -41,11 +41,33 @@ public class Scrabble {
 	}
 
 	public static boolean isWordInDictionary(String word) {
-        for (int i = 0; i < NUM_OF_WORDS; i++) {
-            if (DICTIONARY[i].equals(word)) return true;
-        }
+    // Check if the word consists only of alphabetic characters
+    if (!word.matches("[a-zA-Z]+")) {
         return false;
     }
+
+    word = word.toLowerCase();
+
+    for (int i = 0; i < NUM_OF_WORDS; i++) {
+        if (DICTIONARY[i].equals(word)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+public static void testBuildingTheDictionary() {
+    init();
+    // Prints a few words
+    for (int i = 0; i < 5; i++) {
+        System.out.println(DICTIONARY[i]);
+    }
+    System.out.println(isWordInDictionary("mango")); // should return true or false based on dictionary
+    System.out.println(isWordInDictionary("cat"));   // should return true or false based on dictionary
+    System.out.println(isWordInDictionary("xyz123")); // should return false
+    System.out.println(isWordInDictionary("qwxz"));   // should return true or false based on dictionary
+}
+
 
     public static int wordScore(String word) {
         int score = 0;
