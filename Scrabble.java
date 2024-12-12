@@ -170,18 +170,24 @@ public static void testBuildingTheDictionary() {
 		}
 	}
 
-	public static void testIsWordInDictionary() {
-		System.out.println("Testing isWordInDictionary():");
 	
-		// List of words to test
-		String[] words = {"", "CAT", "xyz123", "qwxz"};
-	
-		// Loop through each word, check if it exists in the dictionary, and print the result
-		for (String word : words) {
-			boolean isInDict = isWordInDictionary(word);
-			System.out.println("'" + word + "' -> " + isInDict + " (expected: " + getExpectedIsWordInDictionaryResult(word) + ")");
-		}
-	}
+
+	public static boolean isWordInDictionary(String word) {
+    // Check if the word consists only of lowercase alphabetic characters
+    if (!word.matches("[a-z]+")) {
+        return false; // Return false for non-lowercase or non-alphabetic words
+    }
+
+    // Now check if the word is in the dictionary
+    for (int i = 0; i < NUM_OF_WORDS; i++) {
+        if (DICTIONARY[i].equals(word)) {
+            return true;  // Word found in dictionary
+        }
+    }
+
+    return false;  // Word not found in dictionary
+}
+
 	
 	// Helper method to return the expected result for the test cases
 	public static boolean getExpectedIsWordInDictionaryResult(String word) {
