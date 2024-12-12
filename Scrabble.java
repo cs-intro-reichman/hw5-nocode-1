@@ -55,31 +55,35 @@ public class Scrabble {
     }
 
     public static String createHand() {
-        Random rand = new Random();
-        StringBuilder hand = new StringBuilder();
+		Random rand = new Random();
+		StringBuilder hand = new StringBuilder();
+	
+		hand.append('a').append('e');
+	
+		while (hand.length() < HAND_SIZE) {
+			char randomLetter = (char) ('a' + rand.nextInt(26));
+			hand.append(randomLetter);
+		}
+	
+		return shuffleString(hand.toString());
+	}
+	
+	private static String shuffleString(String str) {
+		Random rand = new Random();
+		char[] chars = str.toCharArray();
+	
+		for (int i = 0; i < chars.length; i++) {
+			int randomIndex = rand.nextInt(chars.length);
+			char temp = chars[i];
+			chars[i] = chars[randomIndex];
+			chars[randomIndex] = temp;
+		}
+	
+		return new String(chars);
+	}
+	
 
-        hand.append('a').append('e');
-        while (hand.length() < HAND_SIZE) {
-            char randomLetter = (char) ('a' + rand.nextInt(26));
-            hand.append(randomLetter);
-        }
-
-        return shuffleString(hand.toString());
-    }
-
-    private static String shuffleString(String str) {
-        Random rand = new Random();
-        StringBuilder shuffled = new StringBuilder(str);
-
-        for (int i = 0; i < shuffled.length(); i++) {
-            int j = rand.nextInt(shuffled.length());
-            char temp = shuffled.charAt(i);
-            shuffled.setCharAt(i, shuffled.charAt(j));
-            shuffled.setCharAt(j, temp);
-        }
-
-        return shuffled.toString();
-    }
+    
 
     public static void playHand(String hand) {
         int score = 0;
