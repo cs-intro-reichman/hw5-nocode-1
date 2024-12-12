@@ -246,3 +246,4 @@ public static void testBuildingTheDictionary() {
 		playHand("aretiin");
 	}
 }
+}
