@@ -1,13 +1,8 @@
+
 /*
  * RUNI version of the Scrabble game.
  */
 public class Scrabble {
-
-	// Note 1: "Class variables", like the five class-level variables declared below,
-	// are global variables that can be accessed by any function in the class. It is
-	// customary to name class variables using capital letters and underline characters.
-	// Note 2: If a variable is declared "final", it is treated as a constant value
-	// which is initialized once and cannot be changed later.
 
 	// Dictionary file for this Scrabble game
 	static final String WORDS_FILE = "dictionary.txt";
@@ -47,11 +42,33 @@ public class Scrabble {
 	}
 
 	public static boolean isWordInDictionary(String word) {
-        for (int i = 0; i < NUM_OF_WORDS; i++) {
-            if (DICTIONARY[i].equals(word)) return true;
-        }
+    // Check if the word consists only of alphabetic characters
+    if (!word.matches("[a-zA-Z]+")) {
         return false;
     }
+
+    word = word.toLowerCase();
+
+    for (int i = 0; i < NUM_OF_WORDS; i++) {
+        if (DICTIONARY[i].equals(word)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+public static void testBuildingTheDictionary() {
+    init();
+    // Prints a few words
+    for (int i = 0; i < 5; i++) {
+        System.out.println(DICTIONARY[i]);
+    }
+    System.out.println(isWordInDictionary("mango")); // should return true or false based on dictionary
+    System.out.println(isWordInDictionary("cat"));   // should return true or false based on dictionary
+    System.out.println(isWordInDictionary("xyz123")); // should return false
+    System.out.println(isWordInDictionary("qwxz"));   // should return true or false based on dictionary
+}
+
 
     public static int wordScore(String word) {
         int score = 0;
@@ -99,16 +116,20 @@ public class Scrabble {
 	
 
 	public static void playHand(String hand) {
+		System.out.println("Testing playHand():");
+		System.out.println("Loading word list from file...");
+		init();
+		
 		int totalScore = 0;
 		In in = new In();
-	
+		
 		while (!hand.isEmpty()) {
 			System.out.println("Current Hand: " + MyString.spacedString(hand));
 			System.out.println("Enter a word, or '.' to finish playing this hand:");
 			String word = in.readString().trim();
-	
+			
 			if (word.equals(".")) break;
-	
+			
 			if (!subsetOf(word, hand)) {
 				System.out.println("Invalid word. Try again.");
 			} else if (!isWordInDictionary(word)) {
@@ -120,27 +141,56 @@ public class Scrabble {
 				hand = MyString.remove(hand, word);
 			}
 		}
-	
+		
 		System.out.println("End of hand. Total score: " + totalScore + " points");
 	}
 	
+	
+	
     public static void playGame() {
-        init();
-        In in = new In();
-        String hand = "";
-        while (true) {
-            System.out.println("Enter n to deal a new hand, or e to end the game:");
-            String choice = in.readString();
-            if (choice.equals("n")) {
-                hand = createHand();
-                playHand(hand);
-            } else if (choice.equals("e")) {
-                break;
-            } else {
-                System.out.println("Invalid command.");
-            }
-        }
-    }
+		System.out.println("playGame() method exists and can be called");
+		init();
+		In in = new In();
+		String hand = "";
+		while (true) {
+			System.out.println("Enter n to deal a new hand, or e to end the game:");
+			String choice = in.readString();
+			if (choice.equals("n")) {
+				hand = createHand();
+				playHand(hand);
+			} else if (choice.equals("e")) {
+				break;
+			} else {
+				System.out.println("Invalid command.");
+			}
+		}
+	}
+
+	public static void testIsWordInDictionary() {
+		System.out.println("Testing isWordInDictionary():");
+	
+		// List of words to test
+		String[] words = {"", "CAT", "xyz123", "qwxz"};
+	
+		// Loop through each word, check if it exists in the dictionary, and print the result
+		for (String word : words) {
+			boolean isInDict = isWordInDictionary(word);
+			System.out.println("'" + word + "' -> " + isInDict + " (expected: " + getExpectedIsWordInDictionaryResult(word) + ")");
+		}
+	}
+	
+	// Helper method to return the expected result for the test cases
+	public static boolean getExpectedIsWordInDictionaryResult(String word) {
+		switch (word) {
+			case "": return false; // Empty string is not a valid word
+			case "CAT": return false; // Uppercase word is not considered valid as per the current implementation
+			case "xyz123": return false; // Invalid word due to digits
+			case "qwxz": return false; // This will depend on your dictionary content, assuming it isn't in the dictionary
+			default: return false;
+		}
+	}
+	
+	
 
 	public static void main(String[] args) {
 		testBuildingTheDictionary();  
@@ -150,27 +200,64 @@ public class Scrabble {
 		playGame();
 	}
 
-	public static void testBuildingTheDictionary() {
-		init();
-		// Prints a few words
-		for (int i = 0; i < 5; i++) {
-			System.out.println(DICTIONARY[i]);
+
+	
+
+
+	public static void testScrabbleScore() {
+		System.out.println("Testing wordScore():");
+	
+		// List of words to test
+		String[] words = {"cat", "dog", "quiz", "friendship", "running", "", "a"};
+	
+		// Loop through each word, calculate the score, and print the result
+		for (String word : words) {
+			int score = wordScore(word);
+			System.out.println("'" + word + "' -> " + score + " (expected: " + getExpectedScore(word) + ")");
 		}
-		System.out.println(isWordInDictionary("mango"));
 	}
 	
-	public static void testScrabbleScore() {
-		System.out.println(wordScore("bee"));	
-		System.out.println(wordScore("babe"));
-		System.out.println(wordScore("friendship"));
-		System.out.println(wordScore("running"));
+	// Helper method to return the expected score for the test cases
+	public static int getExpectedScore(String word) {
+		switch (word) {
+			case "cat": return 15;
+			case "dog": return 15;
+			case "quiz": return 88;
+			case "friendship": return 240;
+			case "running": return 1056;
+			case "": return 0;
+			case "a": return 1;
+			default: return -1; // Invalid word case (though it shouldn't happen in this test)
+		}
 	}
+	
 	
 	public static void testCreateHands() {
-		System.out.println(createHand());
-		System.out.println(createHand());
-		System.out.println(createHand());
+		System.out.println("Testing createHand():");
+	
+		// Generate and print the properties of 3 hands
+		for (int i = 1; i <= 3; i++) {
+			String hand = createHand();
+			System.out.println("Hand " + i + ":");
+			System.out.println("Length: " + hand.length() + " (expected: 10)");
+			System.out.println("Contains 'a': " + hand.contains("a") + " (expected: true)");
+			System.out.println("Contains 'e': " + hand.contains("e") + " (expected: true)");
+			System.out.println("All lowercase letters: " + hand.equals(hand.toLowerCase()) + " (expected: true)");
+			System.out.println("Valid Scrabble letters: " + isValidScrabbleHand(hand) + " (expected: true)");
+			System.out.println();
+		}
 	}
+	
+	// Helper method to check if all characters in the hand are valid Scrabble letters
+	public static boolean isValidScrabbleHand(String hand) {
+		for (char c : hand.toCharArray()) {
+			if (!Character.isLowerCase(c) || c < 'a' || c > 'z') {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public static void testPlayHands() {
 		init();
 		playHand("ocostrza");
