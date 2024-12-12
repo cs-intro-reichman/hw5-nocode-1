@@ -33,40 +33,38 @@ public class Scrabble {
     }
 
     public static int wordScore(String word) {
-        if (word == null || word.isEmpty()) {
-            return 0;
-        }
-        int score = 0;
-        word = word.toLowerCase();
+    int totalScore = 0;
 
-        for (int i = 0; i < word.length(); i++) {
-            char letter = word.charAt(i);
-            if (letter >= 'a' && letter <= 'z') {
-                score += SCRABBLE_LETTER_VALUES[letter - 'a'];
-            }
-        }
-        if (word.length() == HAND_SIZE) {
-            score += 50;
-        }
-        if (word.contains("runi")) {
-            score += 1000;
-        }
-        return score;
+    for (int i = 0; i < word.length(); i++) {
+        char letter = word.charAt(i);
+        totalScore += SCRABBLE_LETTER_VALUES[letter - 'a'];
     }
 
+    totalScore *= word.length();
+
+    if (word.length() == HAND_SIZE) {
+        totalScore += 50;
+    }
+
+    if (MyString.subsetOf("runi", word)) {
+        totalScore += 1000;
+    }
+
+    return totalScore;
+}
+
+
     public static String createHand() {
-		Random rand = new Random();
-		StringBuilder hand = new StringBuilder();
-	
-		hand.append('a').append('e');
-	
-		while (hand.length() < HAND_SIZE) {
-			char randomLetter = (char) ('a' + rand.nextInt(26));
-			hand.append(randomLetter);
-		}
-	
-		return shuffleString(hand.toString());
-	}
+    String hand = "";
+
+    hand = MyString.randomStringOfLetters(HAND_SIZE - 2);
+    hand = MyString.insertRandomly('a', hand);
+    hand = MyString.insertRandomly('e', hand);
+
+    // Return the completed hand.
+    return hand;
+}
+
 	
 	private static String shuffleString(String str) {
 		Random rand = new Random();
@@ -86,26 +84,44 @@ public class Scrabble {
     
 
     public static void playHand(String hand) {
-        int score = 0;
-        In in = new In();
-        while (!hand.isEmpty()) {
-            System.out.println("Current Hand: " + MyString.spacedString(hand));
-            System.out.print("Enter a word, or '.' to finish playing this hand:");
-            String input = in.readString();
-            if (input.equals(".")) {
-                break;
-            }
-            if (isWordInDictionary(input) && canFormWordFromHand(input, hand)) {
-                int wordScore = wordScore(input);
-                score += wordScore;
-                System.out.println(input + " earned " + wordScore + " points. Score: " + score + " points\n");
-                hand = updateHand(hand, input);
+    int handLength = hand.length();
+    int totalScore = 0;
+    In inputReader = new In();
+
+    while (!hand.isEmpty()) {
+        System.out.println("Current Hand: " + MyString.spacedString(hand));
+        System.out.print("Enter a word, or '.' to finish playing this hand: ");
+
+        String userInput = inputReader.readString();
+
+        if (".".equals(userInput)) {
+            break;
+        }
+
+        if (!userInput.isEmpty()) {
+            if (MyString.subsetOf(userInput, hand)) {
+                if (!isWordInDictionary(userInput)) {
+                    System.out.println("Word not found in dictionary. Please try again.");
+                } else {
+                    int points = wordScore(userInput);
+                    totalScore += points;
+                    System.out.printf("%s earned %d points. Total Score: %d points%n", userInput, points, totalScore);
+                    hand = MyString.remove(hand, userInput);
+                }
             } else {
-                System.out.println("Invalid word. Try again.");
+                System.out.println("Invalid word. Please try again.");
             }
         }
-        System.out.println("End of hand. Total score: " + score + " points");
     }
+
+    // Display the final score based on whether the user finished the letters or quit early.
+    if (hand.isEmpty()) {
+        System.out.printf("You ran out of letters! Total score: %d points%n", totalScore);
+    } else {
+        System.out.printf("Game ended. Total score: %d points%n", totalScore);
+    }
+}
+
 
     private static boolean canFormWordFromHand(String word, String hand) {
         StringBuilder handBuilder = new StringBuilder(hand);
@@ -131,23 +147,25 @@ public class Scrabble {
     }
 
     public static void playGame() {
-    init(); 
-    In in = new In();
+    init();
+
+    In inputReader = new In();
 
     while (true) {
-        System.out.println("Enter n to deal a new hand, or e to end the game:");
-        String input = in.readString();
-        if (input.equals("n")) {
-            String hand = createHand();
-            playHand(hand);
-        } else if (input.equals("e")) {
-            System.out.println("Game over!");
-            break;
-        } else {
+        System.out.println("Enter 'n' to deal a new hand, or 'e' to end the game:");
+
+        String userInput = inputReader.readString();
+
+        if ("n".equals(userInput)) {
+            playHand(createHand());
+        } else if (!"e".equals(userInput)) {
             System.out.println("Invalid input. Please enter 'n' or 'e'.");
+        } else {
+            break;
         }
     }
 }
+
 
 
     public static void main(String[] args) {
