@@ -47,15 +47,18 @@ public class Scrabble {
         return false;
     }
 
-    word = word.toLowerCase();
+    word = word.toLowerCase();  // Convert the word to lowercase
 
+    // Now check if the lowercase word is in the dictionary
     for (int i = 0; i < NUM_OF_WORDS; i++) {
         if (DICTIONARY[i].equals(word)) {
-            return true;
+            return true;  // Word found in dictionary
         }
     }
-    return false;
+
+    return false;  // Word not found in dictionary
 }
+
 
 public static void testBuildingTheDictionary() {
     init();
